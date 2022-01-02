@@ -1,11 +1,9 @@
-const http = require("http")
-const https = require("https")
 const fs = require("fs")
 
 const error = require("./error.js")
+const log = require("../log.js")
 
 module.exports = (req, res) => {
-    console.log(`Connection from ${req.socket.remoteAddress} to ${req.url}`)
 
     if(req.method == "GET") {
         if(req.url.endsWith("/")) req.url += "index.html"
@@ -20,4 +18,6 @@ module.exports = (req, res) => {
             }
         )
     }
+
+    log("website", `${req.socket.remoteAddress} ${req.method} ${req.url}`)
 }
