@@ -8,3 +8,4 @@ node_modules/
 www/ 
 config/
 ssl/
+config.json
