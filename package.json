@@ -1,0 +1,19 @@
+{
+  "name": "webserver",
+  "version": "1.0.0",
+  "description": "webserver",
+  "main": "src/loader.js",
+  "scripts": {
+    "run": "sh scripts/start.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eliiia/webserver.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Eliiia/webserver/issues"
+  },
+  "homepage": "https://github.com/Eliiia/webserver#readme"
+}
