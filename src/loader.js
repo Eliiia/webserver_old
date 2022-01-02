@@ -8,7 +8,7 @@ const conf = require("./config.json")
 http.createServer((req, res) => {
     if(req.hostname != undefined) res.writeHead(308, {Location: `https://${req.hostname}${req.url}`})
     else res.writeHead(308, {Location: `https://${conf.domain}${req.url}`})
-}).listen(conf.web.http, conf.web.hostname, () => console.log(`Cool http server running at http://${conf.web.hostname}:${conf.web.http}/`))
+}).listen(conf.web.http, conf.web.hostname, () => console.log(`cool http redirect server running at http://${conf.web.hostname}:${conf.web.http}/`))
 
 // https server
 const website = require("./modules/website/main.js")
@@ -18,4 +18,4 @@ const httpsOptions = {
 }
 
 https.createServer(httpsOptions, (req, res) => website(req, res))
-    .listen(conf.web.https, () => console.log(`Cool https server running at https://${conf.web.hostname}:${conf.web.https}/`))
+    .listen(conf.web.https, () => console.log(`cool https server running at https://${conf.web.hostname}:${conf.web.https}/`))
