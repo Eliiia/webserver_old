@@ -6,16 +6,36 @@ const conf = require("./config.json")
 
 // http -> https redirect
 http.createServer((req, res) => {
-    if(req.hostname != undefined) res.writeHead(308, {Location: `https://${req.hostname}${req.url}`})
-    else res.writeHead(308, {Location: `https://${conf.domain}${req.url}`})
-}).listen(conf.web.http, conf.web.hostname, () => console.log(`cool http redirect server running at http://${conf.web.hostname}:${conf.web.http}/`))
+    if(req.headers.host != undefined) res.writeHead(308, {Location: `https://${req.headers.host}${req.url}`}).end()
+    else res.writeHead(308, {Location: `https://${conf.domain}${req.url}`}).end()
+}).listen(conf.ports.http, conf.web.hostname, () => console.log(`cool http redirect server running at http://${conf.web.hostname}:${conf.ports.http}/`))
 
 // https server
 const website = require("./modules/website/main.js")
-const httpsOptions = {
-    key: fs.readFileSync(conf.ssl.key),
-    cert: fs.readFileSync(conf.ssl.cert)
+const websiteSSL = {
+    key: fs.readFileSync(conf.ssl.websiteKey),
+    cert: fs.readFileSync(conf.ssl.websiteCert)
 }
 
-https.createServer(httpsOptions, (req, res) => website(req, res))
-    .listen(conf.web.https, () => console.log(`cool https server running at https://${conf.web.hostname}:${conf.web.https}/`))
+https.createServer(websiteSSL, (req, res) => {
+    req.url = decodeURI(req.url)
+
+    if(req.headers.host) {
+        if(req.headers.host.split(".")[0] == "api") res.writeHead(308, {Location: `https://api.${conf.domain}${req.url}`}).end()
+    } return website(req, res)
+}).listen(conf.ports.https, () => console.log(`cool https server running at https://${conf.web.hostname}:${conf.ports.https}/`))
+
+// api https server
+const api = require("./modules/api/main.js")
+const apiSSL = {
+    key: fs.readFileSync(conf.ssl.apiKey),
+    cert: fs.readFileSync(conf.ssl.apiCert)
+}
+
+https.createServer(apiSSL, (req, res) => {
+    req.url = decodeURI(req.url)
+
+    if(req.headers.host) {
+        if(req.headers.host.split(".")[0] == "api") return api(req, res)
+    } res.writeHead(308, {Location: `https://${conf.domain}${req.url}`}).end()
+}).listen(conf.ports.api, () => console.log(`cool https API running at https://${conf.domain}:${conf.ports.api}/`))
