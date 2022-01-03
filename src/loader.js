@@ -2,12 +2,20 @@ const http = require("http")
 const https = require("https")
 const fs = require("fs")
 
+const log = require("./log.js")
+
 const conf = require("./config.json")
 
 // http -> https redirect
 http.createServer((req, res) => {
-    if(req.headers.host != undefined) res.writeHead(308, {Location: `https://${req.headers.host}${req.url}`}).end()
-    else res.writeHead(308, {Location: `https://${conf.domain}${req.url}`}).end()
+    if(req.headers.host != undefined) {
+        res.writeHead(308, {Location: `https://${req.headers.host}${req.url}`}).end()
+        log("redirect", `${req.socket.remoteAddress} ${req.method} ${req.url}`, `308, Location: https://${req.headers.host}${req.url}`)
+    }
+    else {
+        res.writeHead(308, {Location: `https://${conf.domain}${req.url}`}).end()
+        log("redirect", `${req.socket.remoteAddress} ${req.method} ${req.url}`, `308, Location: https://${conf.domain}${req.url}`)
+    }
 }).listen(conf.ports.http, conf.web.hostname, () => console.log(`cool http redirect server running at http://${conf.web.hostname}:${conf.ports.http}/`))
 
 // https server
