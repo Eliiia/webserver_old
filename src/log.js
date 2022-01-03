@@ -5,8 +5,8 @@ const logFiles = {
     "website": "../logs/website.txt"
 }
 
-module.exports = (moduleName, text) => {
-    let logText = `[${moduleName}] ${text}`
+module.exports = (moduleName, text, status) => {
+    let logText = `[${moduleName}] ${text} => ${status}`
     
     console.log(logText)
     

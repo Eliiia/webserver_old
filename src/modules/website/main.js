@@ -20,5 +20,5 @@ module.exports = (req, res) => {
         )
     }
 
-    log("website", `${req.socket.remoteAddress} ${req.method} ${req.url}`)
+    log("website", `${req.socket.remoteAddress} ${req.method} ${req.url}`, result.status)
 }

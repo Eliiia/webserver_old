@@ -5,7 +5,7 @@ const modules = {
 }
 
 module.exports = (req, res) => {
-    let success
+    let result
 
     if(req.method == "GET") {
         res.setHeader("Content-Type", "application/json")
@@ -28,4 +28,6 @@ module.exports = (req, res) => {
         res.writeHead(result.status)
         res.end(result.body)
     }
+
+    log("api", `${req.socket.remoteAddress} ${req.method} ${req.url}`, result.status)
 }
