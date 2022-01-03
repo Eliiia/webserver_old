@@ -10,7 +10,6 @@ module.exports = (req, res) => {
     if(req.method == "GET") {
         res.setHeader("Content-Type", "application/json")
 
-        let result
         const args = req.url.split("/")
 
         if(!modules[args[1]]) result = { status: 404, body: "404 Not Found" }
@@ -21,9 +20,6 @@ module.exports = (req, res) => {
         
             catch(e) { result = {status: 500, body: `500 Internal Server Error\n\n${e}`} }
         }
-
-        if(result.status == 200) success = true
-        else success = false
 
         res.writeHead(result.status)
         res.end(result.body)

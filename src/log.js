@@ -1,15 +1,13 @@
 const fs = require("fs")
 
-const logFiles = {
-    "all": "../logs/all.txt",
-    "website": "../logs/website.txt"
-}
-
 module.exports = (moduleName, text, status) => {
-    let logText = `[${moduleName}] ${text} => ${status}`
-    
+    let d = new Date()
+
+    let logText = `[${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}] [${moduleName}] ${text} => ${status}`
+    let logText2 = `[${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}] ${text} => ${status}`
+
     console.log(logText)
     
-    fs.appendFileSync(logFiles.all, logText+"\n")
-    fs.appendFileSync(logFiles.website, text+"\n")
+    fs.appendFileSync(`../logs/all_${d.getDate()}-${d.getMonth()}-${d.getFullYear()}.txt`, logText+"\n")
+    fs.appendFileSync(`../logs/${moduleName}_${d.getDate()}-${d.getMonth()}-${d.getFullYear()}.txt`, logText2+"\n")
 }
