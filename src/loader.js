@@ -38,4 +38,4 @@ https.createServer(apiSSL, (req, res) => {
     if(req.headers.host) {
         if(req.headers.host.split(".")[0] == "api") return api(req, res)
     } res.writeHead(308, {Location: `https://${conf.domain}${req.url}`}).end()
-}).listen(conf.ports.api, () => console.log(`cool https API running at https://${conf.domain}:${conf.ports.api}/`))
+}).listen(conf.ports.api, () => console.log(`cool https API running at https://${conf.api.hostname}:${conf.ports.api}/`))

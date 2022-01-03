@@ -19,6 +19,7 @@ module.exports = (req, res) => {
             result = error(404)
         }
     }
+    else error = { status: 405, body: "405 Method Not Allowed" }
 
     res.writeHead(result.status)
     res.end(result.body)
