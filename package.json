@@ -11,9 +11,10 @@
     "url": "git+https://github.com/Eliiia/webserver.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/Eliiia/webserver/issues"
   },
-  "homepage": "https://github.com/Eliiia/webserver#readme"
+  "homepage": "https://github.com/Eliiia/webserver#readme",
+  "private": true
 }
