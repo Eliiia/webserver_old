@@ -19,9 +19,9 @@ module.exports = (req, res) => {
             result = error(404)
         }
     }
-    else error = { status: 405, body: "405 Method Not Allowed" }
+    else result = { status: 405, body: "405 Method Not Allowed" }
 
-    res.writeHead(result.status)
+    res.statusCode = result.status
     res.end(result.body)
 
     log("website", `${req.socket.remoteAddress} ${req.method} ${req.url}`, result.status)

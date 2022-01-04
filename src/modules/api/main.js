@@ -20,11 +20,11 @@ module.exports = (req, res) => {
         
             catch(e) { result = {status: 500, body: `500 Internal Server Error\n\n${e}`} }
         }
-
-        res.writeHead(result.status)
-        res.end(result.body)
     }
-    else error = { status: 405, body: "405 Method Not Allowed" }
+    else result = { status: 405, body: "405 Method Not Allowed" }
+
+    res.statusCode = result.status
+    res.end(result.body)
 
     log("api", `${req.socket.remoteAddress} ${req.method} ${req.url}`, result.status)
 }
