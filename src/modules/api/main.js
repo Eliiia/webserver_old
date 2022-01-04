@@ -1,7 +1,7 @@
 const log = require("../../log.js")
 
 const modules = {
-    "ping": require("./modules/ping.js")
+    "ping": require("./routes/ping.js")
 }
 
 module.exports = (req, res) => {
