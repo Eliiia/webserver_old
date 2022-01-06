@@ -1,8 +1,7 @@
 const log = require("../../log.js")
 
 const routes = {
-    "ping": require("./routes/ping.js"),
-    "lyrics": require("./routes/lyrics.js")
+    "ping": require("./routes/ping.js")
 }
 
 module.exports = (req, res) => {
