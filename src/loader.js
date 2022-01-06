@@ -18,7 +18,7 @@ http.createServer((req, res) => {
     }
 }).listen(conf.ports.http, conf.web.hostname, () => console.log(`cool http redirect server running at http://${conf.web.hostname}:${conf.ports.http}/`))
 
-// https server
+// website https server
 const website = require("./modules/website/main.js")
 const websiteSSL = {
     key: fs.readFileSync(conf.ssl.websiteKey),
@@ -41,9 +41,19 @@ const apiSSL = {
 }
 
 https.createServer(apiSSL, (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Request-Method', '*');
+	res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
+    if(req.method == "OPTIONS") {
+        res.statusCode = 204
+        res.end()
+        log("api", `${req.socket.remoteAddress} ${req.method} ${req.url}`, 204)
+        return
+    }
+
     req.url = decodeURI(req.url)
 
     if(req.headers.host) {
         if(req.headers.host.split(".")[0] == "api") return api(req, res)
     } res.writeHead(308, {Location: `https://${conf.domain}${req.url}`}).end()
-}).listen(conf.ports.api, () => console.log(`cool https API running at https://${conf.api.hostname}:${conf.ports.api}/`))
+}).listen(conf.ports.api, () => console.log(`cool https API running at https://api.${conf.api.hostname}:${conf.ports.api}/`))
