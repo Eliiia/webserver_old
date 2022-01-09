@@ -1,6 +1,7 @@
 const fs = require("fs")
 
 const error = require("./error.js")
+const mime = require("./mime.js")
 const log = require("../../log.js")
 
 module.exports = (req, res) => {
@@ -8,7 +9,7 @@ module.exports = (req, res) => {
 
     if(req.method == "GET") {
         if(req.url.endsWith("/")) req.url += "index.html"
-        if(req.url.endsWith(".html")) res.setHeader("Content-Type", "text/html")
+        res.setHeader("Content-Type", mime(req.url))
 
         try {
             result = {
