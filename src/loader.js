@@ -6,11 +6,6 @@ const log = require("./log.js")
 
 const conf = require("./config.json")
 
-function getIp(req) {
-    if(conf.usingNginx) return req.headers["X-Real-IP"]
-    else return req.socket.remoteAddress
-}
-
 // http -> https redirect
 http.createServer((req, res) => {
     if(req.headers.host != undefined) {
@@ -33,8 +28,6 @@ const websiteSSL = {
 https.createServer(websiteSSL, (req, res) => {
     req.url = decodeURI(req.url)
 
-    req.socket.remoteAddress = getIp(req)
-
     if(req.headers.host) {
         if(req.headers.host.split(".")[0] == "api") res.writeHead(308, {Location: `https://api.${conf.domain}${req.url}`}).end()
     } return website(req, res)
@@ -48,8 +41,6 @@ const apiSSL = {
 }
 
 https.createServer(apiSSL, (req, res) => {
-    req.socket.remoteAddress = getIp(req)
-
     res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Request-Method', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
