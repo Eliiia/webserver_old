@@ -9,7 +9,7 @@ module.exports = (req, res) => {
 
     if(req.method == "GET") {
         if(req.url.endsWith("/")) req.url += "index.html"
-        res.setHeader("Content-Type", mime(req.url))
+        contentType = mime(req.url)
 
         try {
             result = {
@@ -18,9 +18,12 @@ module.exports = (req, res) => {
             }
         } catch(e) {
             result = error(404)
+            contentType = "text/html"
         }
     }
     else result = { status: 405, body: "405 Method Not Allowed" }
+
+    res.setHeader("Content-Type", contentType)
 
     res.statusCode = result.status
     res.end(result.body)
