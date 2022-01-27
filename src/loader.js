@@ -51,7 +51,8 @@ https.createServer(apiSSL, (req, res) => {
         return
     }
 
-    req.url = decodeURI(req.url)
+    try { req.url = decodeURI(req.url) }
+    catch(e) { req.end("if you get this message, dm me with the URL you tried to access!") }
 
     if(req.headers.host) {
         if(req.headers.host.split(".")[0] == "api") return api(req, res)
