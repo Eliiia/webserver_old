@@ -21,7 +21,7 @@ module.exports = (req, res) => {
     }
 
     res.statusCode = result.status
-    res.end(result.body)
+    res.end(JSON.stringify(result.body))
 
     log("api", `${req.socket.remoteAddress} ${req.method} ${req.url}`, result.status)
 }
