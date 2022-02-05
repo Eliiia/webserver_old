@@ -17,7 +17,7 @@ module.exports = (req, res) => {
 
     if(result == undefined) {
         try { result = routes[args[1]][1](req, res, args) }
-        catch(e) { result = {status: 500, body: `500 Internal Server Error\n\n${e}`} }
+        catch(e) { result = {status: 500, body: `500 Internal Server Error\n\n${e.stack}`} }
     }
 
     res.statusCode = result.status
