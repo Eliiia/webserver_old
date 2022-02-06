@@ -9,6 +9,8 @@ module.exports = (req, res, args) => {
     if(!req.headers.password) return { status: 400, body: { error: "400 Bad Request" } }
 
     const id = userHandler.addUser(req.headers.username, req.headers.password)
+    
+    if(!id) return { status: 409, body: { error: "Conflict (Username Taken)" } }
 
     result.body = { "token": jwt.sign( { id: id }, conf.api.tokenSecret, { expiresIn: "30d" }) }
 
