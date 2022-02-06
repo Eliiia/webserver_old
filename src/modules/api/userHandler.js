@@ -6,14 +6,14 @@ const jwt = require("jsonwebtoken")
 const usernames = {}
 
 for(x in userData) {
-    usernames[x] = userData[x].name
+    usernames[userData[x].name] = x
 }
 
 const saltRounds = 8
 const epoch = 1640997660000
 
 module.exports.addUser = (name, password) => {
-    if(!usernames[name]) return false
+    if(usernames.hasOwnProperty(name)) return false
 
     const id = Date.now() - epoch
     const hashedPassword = bcrypt.hashSync(password, saltRounds)
@@ -22,6 +22,8 @@ module.exports.addUser = (name, password) => {
         "name": name,
         "password": hashedPassword,
     }
+
+    usernames[name] = id
 
     fs.writeFileSync("../data/users.json", JSON.stringify(userData))
 

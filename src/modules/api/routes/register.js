@@ -12,7 +12,10 @@ module.exports = (req, res, args) => {
     
     if(!id) return { status: 409, body: { error: "Conflict (Username Taken)" } }
 
-    result.body = { "token": jwt.sign( { id: id }, conf.api.tokenSecret, { expiresIn: "30d" }) }
+    result.body = { 
+        "token": jwt.sign( { id: id }, conf.api.tokenSecret, { expiresIn: "30d" }),
+        "id": id
+    }
 
     return result
 }
