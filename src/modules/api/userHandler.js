@@ -1,7 +1,8 @@
 const fs = require("fs")
 const bcrypt = require("bcrypt")
-const userData = require("../../../data/users.json")
 const jwt = require("jsonwebtoken")
+const conf = require("../../config.json")
+const userData = require("../../../data/users.json")
 
 const usernames = {}
 
@@ -28,4 +29,14 @@ module.exports.addUser = (name, password) => {
     fs.writeFileSync("../data/users.json", JSON.stringify(userData))
 
     return id
+}
+
+module.exports.authUser = (name, password) => {
+    if(!usernames.hasOwnProperty(name)) return false
+
+    const id = usernames[name]
+    
+    if(bcrypt.compareSync(password, userData[id].password)) return jwt.sign( { id: usernames[name] }, conf.api.tokenSecret, { expiresIn: "30d" })
+    
+    return false
 }

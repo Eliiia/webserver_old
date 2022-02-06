@@ -3,6 +3,7 @@ const log = require("../../log.js")
 const routes = {
     "ping": [ ["GET"], require("./routes/ping.js") ],
     "register": [ ["POST"], require("./routes/register.js")],
+    "login": [ ["POST"], require("./routes/login.js")],
 }
 
 module.exports = (req, res) => {
