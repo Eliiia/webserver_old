@@ -8,4 +8,7 @@ node_modules/
 www/ 
 config/
 ssl/
+
+# JSON/databases
 config.json
+*.json
