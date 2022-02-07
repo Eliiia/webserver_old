@@ -4,7 +4,8 @@
   "description": "webserver",
   "main": "src/loader.js",
   "scripts": {
-    "run": "sh scripts/start.sh"
+    "run": "cd scripts && sh start.sh",
+    "test": "cd scripts && sh dev-start.sh"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "private": true,
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "discord.js": "^13.6.0",
     "jsonwebtoken": "^8.5.1"
   }
 }
