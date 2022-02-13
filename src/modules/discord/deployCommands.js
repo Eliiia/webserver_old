@@ -8,7 +8,7 @@ const commands = []
 for (const file of fs.readdirSync("./modules/discord/commands/")) {
 	const command = require(`./commands/${file}`)
     const name = file.split(".")[0]
-    commands[name] = command.info
+    commands.push(command.info)
 }
 
 const body = commands.map(command => command.toJSON())
