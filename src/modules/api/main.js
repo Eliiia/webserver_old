@@ -27,7 +27,10 @@ module.exports = (req, res) => {
     })
 
     req.on("end", chunk => {
-        req.body = JSON.parse(req.body)
+        if(req.body != "") {
+            try { req.body = JSON.parse(req.body) }
+            catch(e) { result = { status: 400, body: { error: `400 Bad Request (Invalid JSON)` } } }
+        }
 
         if(result == undefined) {
             try { result = routes[args[1]][1](req, res, args) }
