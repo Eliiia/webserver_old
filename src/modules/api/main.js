@@ -4,6 +4,7 @@ const routes = {
     "ping": [ ["GET"], require("./routes/ping.js") ],
     "register": [ ["POST"], require("./routes/register.js")],
     "login": [ ["POST"], require("./routes/login.js")],
+    "users": [ ["GET"], require("./routes/users.js")],
 }
 
 module.exports = (req, res) => {
@@ -15,7 +16,7 @@ module.exports = (req, res) => {
 
     if(!routes[args[1]] || args.length == 2) result = { status: 404, body: { error: "404 Not Found" } }
     else if(!routes[args[1]][0].includes(req.method)) result = { status: 405, body: { error: "405 Method Not Allowed" } }
-    else if(!["application/json", undefined].includes(req.headers["content-type"])) result = { status: 400, body: { error: `400 Bad Request\n\n` } }
+    else if(!["application/json", undefined].includes(req.headers["content-type"])) result = { status: 400, body: { error: `400 Bad Request (Invalid Content-Type)` } }
 
     req.body = ""
 
