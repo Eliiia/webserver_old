@@ -8,7 +8,7 @@ module.exports = (req, res, args) => {
     if(!req.body.username) return { status: 400, body: { error: "400 Bad Request" } }
     if(!req.body.password) return { status: 400, body: { error: "400 Bad Request" } }
 
-    const id = userHandler.addUser(req.headers.username, req.headers.password)
+    const id = userHandler.addUser(req.body.username, req.body.password)
     
     if(!id) return { status: 409, body: { error: "Conflict (Username Taken)" } }
 
