@@ -40,3 +40,10 @@ module.exports.authUser = (name, password) => {
     
     return false
 }
+
+module.exports.getData = (id) => {
+    let data = userData[id]
+    if(!data) return false
+    delete data.password
+    return data
+}
