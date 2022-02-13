@@ -1,7 +1,7 @@
 const fs = require("fs")
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
-const conf = require('../../config.json');
+const { REST } = require('@discordjs/rest')
+const { Routes } = require('discord-api-types/v9')
+const conf = require('../../config.json').discord
 
 const commands = []
 
@@ -11,10 +11,10 @@ for (const file of fs.readdirSync("./modules/discord/commands/")) {
     commands[name] = command.info
 }
 
-const body = commands.map(command => command.toJSON());
+const body = commands.map(command => command.toJSON())
 
-const rest = new REST({ version: '9' }).setToken(conf.discord.token);
+const rest = new REST({ version: '9' }).setToken(conf.token);
 
-rest.put(Routes.applicationCommands(conf.discord.clientId), { body: body })
+rest.put(Routes.applicationCommands(conf.clientId), { body: body })
 	.then(() => console.log('Successfully registered application commands.'))
-	.catch(console.error);
+	.catch(console.error)

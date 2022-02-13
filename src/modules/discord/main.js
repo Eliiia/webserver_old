@@ -1,6 +1,6 @@
 const Discord = require("discord.js")
 const fs = require("fs")
-const conf = require("../../config.json")
+const conf = require("../../config.json").discord
 
 const events = {}
 
@@ -16,4 +16,4 @@ Object.keys(events).forEach(eventName => {
     client.on(eventName, events[eventName].bind(null, client))
 })
 
-client.login(conf.discord.token)
+client.login(conf.token)

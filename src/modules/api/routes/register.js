@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 const userHandler = require("../userHandler.js")
-const conf = require("../../../config.json")
+const conf = require("../../../config.json").api
 
 module.exports = (req, res, args) => {
     let result = { status: 201, body: {"": ""} }
@@ -13,7 +13,7 @@ module.exports = (req, res, args) => {
     if(!id) return { status: 409, body: { error: "Conflict (Username Taken)" } }
 
     result.body = { 
-        "token": jwt.sign( { id: id }, conf.api.tokenSecret, { expiresIn: "30d" }),
+        "token": jwt.sign( { id: id }, conf.tokenSecret, { expiresIn: "30d" }),
         "id": id
     }
 

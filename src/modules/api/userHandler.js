@@ -1,7 +1,7 @@
 const fs = require("fs")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
-const conf = require("../../config.json")
+const conf = require("../../config.json").api
 const userData = require("../../../data/users.json")
 
 const usernames = {}
@@ -36,7 +36,7 @@ module.exports.authUser = (name, password) => {
 
     const id = usernames[name]
     
-    if(bcrypt.compareSync(password, userData[id].password)) return jwt.sign( { id: usernames[name] }, conf.api.tokenSecret, { expiresIn: "30d" })
+    if(bcrypt.compareSync(password, userData[id].password)) return jwt.sign( { id: usernames[name] }, conf.tokenSecret, { expiresIn: "30d" })
     
     return false
 }
