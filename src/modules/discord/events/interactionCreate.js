@@ -1,4 +1,5 @@
 const fs = require("fs")
+const log = require("../../../log.js")
 
 const commands = {}
 
@@ -14,5 +15,14 @@ module.exports = (client, interaction) => {
 
     const command = commands[interaction.commandName]
 
-    command.run(interaction)
+    let success = false
+
+    try {
+        command.run(interaction)
+        success = true
+    } catch(e) {
+        interaction.reply("Ran into an error! :c")
+    }
+
+    log("discord", `${interaction.user.tag} ran /${interaction.commandName}`, success)
 }
