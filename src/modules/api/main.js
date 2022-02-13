@@ -17,13 +17,24 @@ module.exports = (req, res) => {
     else if(!routes[args[1]][0].includes(req.method)) result = { status: 405, body: { error: "405 Method Not Allowed" } }
     else if(!["application/json", undefined].includes(req.headers["content-type"])) result = { status: 400, body: { error: `400 Bad Request\n\n` } }
 
-    if(result == undefined) {
-        try { result = routes[args[1]][1](req, res, args) }
-        catch(e) { result = { status: 500, body: { error: `500 Internal Server Error\n\n${e.stack}` } } }
-    }
+    req.body = ""
 
-    res.statusCode = result.status
-    res.end(JSON.stringify(result.body))
+    req.on("data", (chunk) => {
+        if(chunk == undefined) return
+        req.body += `${chunk}`
 
-    log("api", `${req.socket.remoteAddress} ${req.method} ${req.url}`, result.status)
+        if(req.body.length > 1e6) result = { status: 413, body: { error: "Payload Too Large" } } //stop request if larger than 1MB
+    })
+
+    req.on("end", chunk => {
+        if(result == undefined) {
+            try { result = routes[args[1]][1](req, res, args) }
+            catch(e) { result = { status: 500, body: { error: `500 Internal Server Error\n\n${e.stack}` } } }
+        }
+
+        res.statusCode = result.status
+        res.end(JSON.stringify(result.body))
+
+        log("api", `${req.socket.remoteAddress} ${req.method} ${req.url}`, result.status)
+    })
 }
