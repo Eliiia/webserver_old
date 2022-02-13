@@ -27,6 +27,8 @@ module.exports = (req, res) => {
     })
 
     req.on("end", chunk => {
+        req.body = JSON.parse(req.body)
+
         if(result == undefined) {
             try { result = routes[args[1]][1](req, res, args) }
             catch(e) { result = { status: 500, body: { error: `500 Internal Server Error\n\n${e.stack}` } } }
