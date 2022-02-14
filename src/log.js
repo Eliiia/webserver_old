@@ -16,6 +16,9 @@ module.exports = (moduleName, text, status) => {
         if(status) status = "success"
         else status = "failure"
     }
+    else if(moduleName == "redirect") {
+        colour = "[32m"
+    }
     else throw `log.js; unknown moduleName passed\n\tmoduleName: ${moduleName}`
 
     let logText = `[${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}] [${moduleName}] ${text} => \x1b${colour}${status}\x1b[39m`
