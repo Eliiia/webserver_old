@@ -9,6 +9,7 @@ module.exports = (req, res) => {
 
     if(req.method == "GET") {
         if(req.url.endsWith("/")) req.url += "index.html"
+        if(fs.existsSync(`${__dirname}/www${req.url}`)) if(fs.lstatSync(`${__dirname}/www${req.url}`).isDirectory()) req.url += "/index.html"
         contentType = mime(req.url)
 
         try {
