@@ -14,7 +14,7 @@ module.exports = (req, res) => {
 
     const args = req.url.split("/")
 
-    if(!routes[args[1]] || args.length == 2) result = { status: 404, body: { error: "404 Not Found" } }
+    if(!routes[args[1]] || args.length == 1) result = { status: 404, body: { error: "404 Not Found" } }
     else if(!routes[args[1]][0].includes(req.method)) result = { status: 405, body: { error: "405 Method Not Allowed" } }
     else if(!["application/json", undefined].includes(req.headers["content-type"])) result = { status: 400, body: { error: `400 Bad Request (Invalid Content-Type)` } }
 
