@@ -60,4 +60,4 @@ https.createServer(apiSSL, (req, res) => {
 }).listen(conf.ports.api, () => console.log(`cool https API running at https://api.${conf.api.hostname}:${conf.ports.api}/`))
 
 // discord bot
-const bot = require("./modules/discord/main.js") // start log is handled internally
+require("./modules/discord/main.js") // start log is handled internally
