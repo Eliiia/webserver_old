@@ -8,11 +8,10 @@ const conf = require("./config.json")
 
 // http -> https redirect
 http.createServer((req, res) => {
-    if(req.headers.host != undefined) {
+    if (req.headers.host !== undefined) {
         res.writeHead(308, {Location: `https://${req.headers.host}${req.url}`}).end()
         log("redirect", `${req.socket.remoteAddress} ${req.method} ${req.url}`, `308, Location: https://${req.headers.host}${req.url}`)
-    }
-    else {
+    } else {
         res.writeHead(308, {Location: `https://${conf.domain}${req.url}`}).end()
         log("redirect", `${req.socket.remoteAddress} ${req.method} ${req.url}`, `308, Location: https://${conf.domain}${req.url}`)
     }
@@ -29,7 +28,7 @@ https.createServer(websiteSSL, (req, res) => {
     req.url = decodeURI(req.url)
 
     if(req.headers.host) {
-        if(req.headers.host.split(".")[0] == "api") res.writeHead(308, {Location: `https://api.${conf.domain}${req.url}`}).end()
+        if(req.headers.host.split(".")[0] === "api") res.writeHead(308, {Location: `https://api.${conf.domain}${req.url}`}).end()
     } return website(req, res)
 }).listen(conf.ports.https, () => console.log(`cool https server running at https://${conf.web.hostname}:${conf.ports.https}/`))
 
@@ -44,7 +43,7 @@ https.createServer(apiSSL, (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Request-Method', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST');
-    if(req.method == "OPTIONS") {
+    if(req.method === "OPTIONS") {
         res.statusCode = 204
         res.end()
         log("api", `${req.socket.remoteAddress} ${req.method} ${req.url}`, 204)
@@ -55,7 +54,7 @@ https.createServer(apiSSL, (req, res) => {
     catch(e) { res.end("if you get this message, dm me with the URL you tried to access!") }
 
     if(req.headers.host) {
-        if(req.headers.host.split(".")[0] == "api") return api(req, res)
+        if(req.headers.host.split(".")[0] === "api") return api(req, res)
     } res.writeHead(308, {Location: `https://${conf.domain}${req.url}`}).end()
 }).listen(conf.ports.api, () => console.log(`cool https API running at https://api.${conf.api.hostname}:${conf.ports.api}/`))
 

@@ -9,7 +9,9 @@ const conf = require("../../config.json").web
 module.exports = (req, res) => {
     let result
 
-    if(req.method == "GET") {
+    let contentType
+
+    if(req.method === "GET") {
         if(req.url.endsWith("/")) req.url += "index.html"
         if(fs.existsSync(`${__dirname}/www${req.url}`)) {
             if(fs.lstatSync(`${__dirname}/www${req.url}`).isDirectory()) {
@@ -18,7 +20,7 @@ module.exports = (req, res) => {
                     log("website", `${req.socket.remoteAddress} ${req.method} ${req.url}`, 308)
                     return
                 }}}
-        
+
         contentType = mime(req.url)
 
         try {

@@ -6,6 +6,6 @@ module.exports = (req, res, args) => {
     
     const token = userHandler.authUser(req.body.username, req.body.password)
 
-    if(token == false) { return { status: 401, body: { error: "401 Not Authenticated (wrong username and/or password)" } } }
+    if(token === false) { return { status: 401, body: { error: "401 Not Authenticated (wrong username and/or password)" } } }
     return { status: 200, body: { "token": token } }
 }
