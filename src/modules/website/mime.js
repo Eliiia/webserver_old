@@ -16,6 +16,6 @@ const types = {
 module.exports = (path) => {
     let ext = path.split(".").pop()
 
-    if(!types[ext]) return "application/octet-stream"
+    if (!types[ext]) return "application/octet-stream"
     return types[ext]
 }

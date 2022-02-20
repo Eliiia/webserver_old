@@ -14,7 +14,7 @@ const saltRounds = 8
 const epoch = 1640997660000
 
 module.exports.addUser = (name, password) => {
-    if(usernames.hasOwnProperty(name)) return false
+    if (usernames.hasOwnProperty(name)) return false
 
     const id = Date.now() - epoch
     const hashedPassword = bcrypt.hashSync(password, saltRounds)
@@ -32,18 +32,18 @@ module.exports.addUser = (name, password) => {
 }
 
 module.exports.authUser = (name, password) => {
-    if(!usernames.hasOwnProperty(name)) return false
+    if (!usernames.hasOwnProperty(name)) return false
 
     const id = usernames[name]
     
-    if(bcrypt.compareSync(password, userData[id].password)) return jwt.sign( { id: usernames[name] }, conf.tokenSecret, { expiresIn: "30d" })
+    if (bcrypt.compareSync(password, userData[id].password)) return jwt.sign( { id: usernames[name] }, conf.tokenSecret, { expiresIn: "30d" })
     
     return false
 }
 
 module.exports.getData = (id) => {
     let data = userData[id]
-    if(!data) return false
+    if (!data) return false
     delete data.password
     return data
 }

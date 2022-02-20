@@ -10,8 +10,8 @@ for (const file of fs.readdirSync("./modules/discord/commands/")) {
 }
 
 module.exports = (client, interaction) => {
-    if(!interaction.isCommand()) return
-    if(!commands[interaction.commandName]) return
+    if (!interaction.isCommand()) return
+    if (!commands[interaction.commandName]) return
 
     const command = commands[interaction.commandName]
 

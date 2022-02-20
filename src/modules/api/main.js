@@ -14,26 +14,26 @@ module.exports = (req, res) => {
 
     const args = req.url.split("/")
 
-    if(!routes[args[1]] || args.length === 1) result = { status: 404, body: { error: "404 Not Found" } }
-    else if(!routes[args[1]][0].includes(req.method)) result = { status: 405, body: { error: "405 Method Not Allowed" } }
-    else if(!["application/json", undefined].includes(req.headers["content-type"])) result = { status: 400, body: { error: `400 Bad Request (Invalid Content-Type)` } }
+    if (!routes[args[1]] || args.length === 1) result = { status: 404, body: { error: "404 Not Found" } }
+    else if (!routes[args[1]][0].includes(req.method)) result = { status: 405, body: { error: "405 Method Not Allowed" } }
+    else if (!["application/json", undefined].includes(req.headers["content-type"])) result = { status: 400, body: { error: `400 Bad Request (Invalid Content-Type)` } }
 
     req.body = ""
 
     req.on("data", (chunk) => {
-        if(chunk === undefined) return
+        if (chunk === undefined) return
         req.body += `${chunk}`
 
-        if(req.body.length > 1e6) result = { status: 413, body: { error: "Payload Too Large" } } //stop request if larger than 1MB
+        if (req.body.length > 1e6) result = { status: 413, body: { error: "Payload Too Large" } } //stop request if larger than 1MB
     })
 
     req.on("end", chunk => {
-        if(req.body !== "") {
+        if (req.body !== "") {
             try { req.body = JSON.parse(req.body) }
             catch(e) { result = { status: 400, body: { error: `400 Bad Request (Invalid JSON)` } } }
         }
 
-        if(!result) {
+        if (!result) {
             try { result = routes[args[1]][1](req, res, args) }
             catch(e) { result = { status: 500, body: { error: `500 Internal Server Error\n\n${e.stack}` } } }
         }

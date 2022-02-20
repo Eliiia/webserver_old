@@ -11,11 +11,11 @@ module.exports = (req, res) => {
 
     let contentType
 
-    if(req.method === "GET") {
-        if(req.url.endsWith("/")) req.url += "index.html"
-        if(fs.existsSync(`${__dirname}/www${req.url}`)) {
-            if(fs.lstatSync(`${__dirname}/www${req.url}`).isDirectory()) {
-                if(fs.existsSync(`${__dirname}/www${req.url}/index.html`)) {
+    if (req.method === "GET") {
+        if (req.url.endsWith("/")) req.url += "index.html"
+        if (fs.existsSync(`${__dirname}/www${req.url}`)) {
+            if (fs.lstatSync(`${__dirname}/www${req.url}`).isDirectory()) {
+                if (fs.existsSync(`${__dirname}/www${req.url}/index.html`)) {
                     res.writeHead(308, {Location: `https://${conf.domain}${req.url}/`}).end()
                     log("website", `${req.socket.remoteAddress} ${req.method} ${req.url}`, 308)
                     return
