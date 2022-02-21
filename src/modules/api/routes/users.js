@@ -6,7 +6,7 @@ module.exports = (req, res, args) => {
 
     let data = userHandler.getData(id)
 
-    if (!data) return { status: 400, body: { error: "404 Not Found" } }
+    if (!data) return { status: 404, body: { error: "404 Not Found" } }
 
     return { status: 200, body: { data: data } }
 }
