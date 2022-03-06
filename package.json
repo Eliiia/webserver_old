@@ -1,0 +1,21 @@
+{
+  "name": "webserver",
+  "version": "2.0.0",
+  "description": "A cool webserver",
+  "main": "src/loader.ts",
+  "scripts": {
+    "start": "node build/loader.ts",
+    "build": "tsc",
+    "test": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eliiia/webserver.git"
+  },
+  "author": "Eliiia",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Eliiia/webserver/issues"
+  },
+  "homepage": "https://github.com/Eliiia/webserver#readme"
+}
