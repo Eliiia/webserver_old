@@ -1,16 +1,8 @@
-# IDE stuff
-.idea/
-
 # Logs
 logs
 
 # Dependency directories
 node_modules/
-
-# Webserver-related stuff
-www/ 
-config/
-ssl/
 
 # JSON/databases
 config.json
