@@ -7,7 +7,7 @@ const routes = {
     "users": [ ["GET"], require("./routes/users.js")],
 }
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
     let result
 
     res.setHeader("Content-Type", "application/json")
@@ -27,14 +27,14 @@ module.exports = (req, res) => {
         if (req.body.length > 1e6) result = { status: 413, body: { error: "Payload Too Large" } } //stop request if larger than 1MB
     })
 
-    req.on("end", chunk => {
+    req.on("end", async chunk => {
         if (req.body !== "") {
             try { req.body = JSON.parse(req.body) }
             catch(e) { result = { status: 400, body: { error: `400 Bad Request (Invalid JSON)` } } }
         }
 
         if (!result) {
-            try { result = routes[args[1]][1](req, res, args) }
+            try { result = await routes[args[1]][1](req, res, args) }
             catch(e) { result = { status: 500, body: { error: `500 Internal Server Error\n\n${e.stack}` } } }
         }
 

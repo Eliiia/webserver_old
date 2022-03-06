@@ -1,10 +1,10 @@
 const userHandler = require("../userHandler.js")
 
-module.exports = (req, res, args) => {
+module.exports = async (req, res, args) => {
     const id = args[2]
     if (!id) return { status: 400, body: { error: "400 Bad Request (No ID Supplied)" } }
 
-    let data = userHandler.getData(id)
+    let data = await userHandler.getData(id)
 
     if (!data) return { status: 404, body: { error: "404 Not Found" } }
 
